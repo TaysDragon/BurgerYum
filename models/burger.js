@@ -1,28 +1,25 @@
-// Dependencies
-// =============================================================
+// Inside burger.js, import orm.js into burger.js
+var orm = require("../config/orm.js");
 
-// This may be confusing but here Sequelize (capital) references the standard library
-var Sequelize = require("sequelize");
-// sequelize (lowercase) references our connection to the DB.
-var sequelize = require("../config/connection.js");
+// Also inside burger.js, create the code that will call the ORM functions using burger specific input for the ORM.
 
-// Creates a "Burger" model that matches up with DB
-var Burger = sequelize.define("Burger", {
-  burgerName: {
-    type: Sequelize.STRING
+var burger = {
+  all: function(cb) {
+    orm.all("burgers", function(res) {
+      cb(res);
+    });
   },
-  devoured: {
-    type: Sequelize.BOOLEAN
+  create: function(cols, vals, cb) {
+    orm.create("burgers", cols, vals, function(res) {
+      cb(res);
+    });
   },
-  date: {
-    type: Sequelize.DATE
+  update: function(objColVals, condition, cb) {
+    orm.update("burgers", objColVals, condition, function(res) {
+      cb(res);
+    });
   }
-}, {
-  timestamps: false
-});
+};
 
-// Syncs with DB
-Burger.sync();
-
-// Makes the Burger Model available for other files (will also create a table)
-module.exports = Burger;
+// Export at the end of the burger.js file.
+module.exports = burger;
