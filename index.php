@@ -1,1 +1,1 @@
-<?php header( 'Location: public\test.html' ) ;  ?>
+<?php header( 'Location: views\index.handlebars' ) ;  ?>
